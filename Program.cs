@@ -1,23 +1,35 @@
 ﻿using System;
 
-namespace Lab3_5
+namespace Lab4_4
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string blackListWord = "amazon";
-            bool isSpam = false;
+            string[] blackList = {
+            "buy", "viagra", "XXX", "free money",
+                "lifetime offer", "send money", "bank account",
+                "nigeria", "online pharmacy", "h8te", "meet girls" };
+
             string message = Console.ReadLine();
-            if (message.Contains(blackListWord))
+            bool isSpam = false;
+            message = message.ToLower();
+            for (int i = 0; i < blackList.Length; i++)
             {
-                isSpam = true;
-                Console.WriteLine("The message is spam");
+                if (message.Contains(blackList[i]))
+                {
+                    isSpam = true;
+                }
+            }
+
+
+            if (isSpam == true)
+            {
+                Console.WriteLine("The message contained spam");
             }
             else
             {
-                isSpam = false;
-                Console.WriteLine("The message is not spam.");
+                Console.WriteLine("The Message is Ok.");
             }
         }
     }
