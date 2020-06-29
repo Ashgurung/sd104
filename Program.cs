@@ -1,56 +1,68 @@
 ﻿using System;
 
-namespace lab5_4
+namespace lab5_6
 {
     class Program
     {
-        public struct Mario
+
+        public struct Customer
         {
-            public enum Size
-            {
-                small,
-                large
-            }
-
-            public int numOfLives;
-            public string currentLevel;
-            public Size sizeOfMario;
-            public bool canShootFireBalls;
-            public bool isJumping;
-            public int numOfCoins;
-
+            public string first_name;
+            public string last_name;
+            public int age;
+            public bool hasMembership;
         }
 
         static void Main(string[] args)
         {
-            Mario mario = new Mario();
-            mario.numOfLives = 3;
-            mario.currentLevel = "World 1-1";
-            mario.sizeOfMario = Mario.Size.small;
-            mario.canShootFireBalls = false;
-            mario.isJumping = false;
+
+            Customer customer1 = new Customer();
+            Customer customer2 = new Customer();
+            Customer customer3 = new Customer();
+
+            customer1.first_name = "Salman";
+            customer1.last_name = "Khan";
+            customer1.age = 17;
+            customer1.hasMembership = false;
+
+            customer2.first_name = "Jonny";
+            customer2.last_name = "Levar";
+            customer2.age = 43;
+            customer2.hasMembership = false;
+
+            customer3.first_name = "Akshay";
+            customer3.last_name = "Kumar";
+            customer3.age = 22;
+            customer3.hasMembership = true;
+
+            Customer[] allCustomers = { customer1, customer2, customer3 };
+
+            for (int i = 0; i < allCustomers.Length; i++)
+            {
+                if (allCustomers[i].age < 21)
+                {
+                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " is not allowed to place an order");
+                }
+                else
+                {
+                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " can place an order");
+                }
+
+                if (allCustomers[i].hasMembership == true)
+                {
+                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " is a premium member.");
+                }
+                else
+                {
+                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " is a standard member.");
+                }
 
 
-            Console.WriteLine("Mario is running through the level and meets a Gooba. Set Mario to jumping so he can kill it");
-            mario.isJumping = true;
 
-            Console.WriteLine("Mario squashes the Gooba. Now he needs to land!");
-            mario.isJumping = false;
 
-            Console.WriteLine("Mario hits a block and finds a 1UP. Increase Mario's life by one.");
-            mario.numOfLives += 1;
+            }
 
-            Console.WriteLine("Mario finds a secret Fire Flower and can now shoot fireballs. Change mario!");
-            mario.canShootFireBalls = true;
 
-            Console.WriteLine("Mario finds another power up mushroom and gets big. Change Mario");
-            mario.sizeOfMario = Mario.Size.large;
-
-            Console.WriteLine("Mario finds a stash of gold coins. Give Mario 10 coins.");
-            mario.numOfCoins = 10;
-
-            Console.WriteLine("Mario finshes the level! Change Mario's current level to World 1-2");
-            mario.currentLevel = "World 1-2";
 
         }
     }
