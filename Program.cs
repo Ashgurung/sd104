@@ -1,43 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace lab4_5
+namespace Lab4_6
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //Create the list of scores.
-            List<int> scores = new List<int>();
-            scores.Add(1200);
-            scores.Add(4400);
-            scores.Add(3700);
-            scores.Add(8900);
-            scores.Add(7200);
+            string[] days = new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            string[] tasks = new string[7];
 
-
-            //sort the list in default order and print it.
-            scores.Sort();
-
-            foreach (int s in scores)
+            for (int i = 0; i < days.Length; i++)
             {
-                Console.WriteLine(s);
+
+                Console.WriteLine("Type in a new Task for " + days[i]);
+                tasks[i] = days[i] + " : " + Console.ReadLine();
+
             }
 
-            //Reverse the list order and print it.
-            scores.Reverse();
-
-            foreach (int s in scores)
+            for (int i = 0; i < days.Length; i++)
             {
-                Console.WriteLine(s);
+                Console.WriteLine(tasks[i]);
             }
-
-            //Add a new item to the list
-            scores.Add(2400);
-
-            //remove an item from the list
-            scores.Remove(4400);
-
         }
     }
 }
