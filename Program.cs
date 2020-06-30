@@ -1,69 +1,85 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace lab5_6
+
+namespace ConsoleAppLab7_4
 {
-    class Program
+    class DatingProfile
     {
+        public string firstName;
+        private string lastName;
+        public int age;
+        public string gender;
+        public string bio;
+        private List<Messages> myMessages;
 
-        public struct Customer
+        public DatingProfile(string firstName, string lastName, int age, string gender)
         {
-            public string first_name;
-            public string last_name;
-            public int age;
-            public bool hasMembership;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.gender = gender;
+            myMessages = new List<Messages>();
         }
 
+        public void WriteBio(string text)
+        {
+            bio = text;
+        }
+
+        public void AddToInbox(Messages message)
+        {
+            myMessages.Add(message);
+
+        }
+
+        public void SendMessage(string messageTitle, string messageData, DatingProfile sentTo)
+        {
+            Messages message = new Messages(this, messageTitle, messageData);
+            sentTo.AddToInbox(message);
+        }
+
+        public void ReadMessage()
+        {
+            foreach (Messages message in myMessages)
+            {
+                if (message.isRead == false)
+                {
+                    Console.WriteLine(message.messageTitle);
+                    Console.WriteLine(message.messageData);
+                    message.isRead = true;
+                }
+            }
+        }
+    }
+    class Messages
+    {
+        public DatingProfile sender;
+        public string messageTitle;
+        public string messageData;
+        public bool isRead;
+
+        public Messages(DatingProfile sender, string messageTitle, string messageData)
+        {
+            this.sender = sender;
+            this.messageTitle = messageTitle;
+            this.messageData = messageData;
+            isRead = false;
+        }
+
+    }
+    class Program
+    {
         static void Main(string[] args)
         {
+            DatingProfile Ranveer = new DatingProfile("Ranveer", "Singh", 28, "Male");
+            Ranveer.WriteBio("Strong outdoors type");
 
-            Customer customer1 = new Customer();
-            Customer customer2 = new Customer();
-            Customer customer3 = new Customer();
+            DatingProfile Aamu = new DatingProfile("Aamu", "Sth", 25, "Female");
+            Aamu.WriteBio("new to this site");
 
-            customer1.first_name = "Salman";
-            customer1.last_name = "Khan";
-            customer1.age = 17;
-            customer1.hasMembership = false;
-
-            customer2.first_name = "Jonny";
-            customer2.last_name = "Levar";
-            customer2.age = 43;
-            customer2.hasMembership = false;
-
-            customer3.first_name = "Akshay";
-            customer3.last_name = "Kumar";
-            customer3.age = 22;
-            customer3.hasMembership = true;
-
-            Customer[] allCustomers = { customer1, customer2, customer3 };
-
-            for (int i = 0; i < allCustomers.Length; i++)
-            {
-                if (allCustomers[i].age < 21)
-                {
-                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " is not allowed to place an order");
-                }
-                else
-                {
-                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " can place an order");
-                }
-
-                if (allCustomers[i].hasMembership == true)
-                {
-                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " is a premium member.");
-                }
-                else
-                {
-                    Console.WriteLine(allCustomers[i].first_name + " " + allCustomers[i].last_name + " is a standard member.");
-                }
-
-
-
-
-            }
-
-
-
+            Ranveer.SendMessage("Hello Aamu", "Want to get some coffee?", Aamu);
+            Aamu.ReadMessage();
         }
     }
 }
