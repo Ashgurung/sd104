@@ -1,85 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
-
-
-namespace ConsoleAppLab7_4
+using System.IO;
+using System.Text;
+namespace ConsoleAppLab9_4
 {
-    class DatingProfile
+    class Header
     {
-        public string firstName;
-        private string lastName;
-        public int age;
-        public string gender;
-        public string bio;
-        private List<Messages> myMessages;
+        public const string open = "<h1>";
+        public const string close = "</h1>";
 
-        public DatingProfile(string firstName, string lastName, int age, string gender)
+        public string CreateHeader(string text)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.age = age;
-            this.gender = gender;
-            myMessages = new List<Messages>();
+            string header = String.Concat(open, text, close, "\n");
+            return header;
+        }
+    }
+
+    class UnorderedList
+    {
+        public const string open = "<ul>";
+        public const string close = "</ul>";
+
+        public string CreateListItem(string text)
+        {
+            string open = "<li>\n";
+            string close = "</li>\n";
+
+            string listItem = String.Concat(open, text, close, "\n");
+            return listItem;
         }
 
-        public void WriteBio(string text)
+        public StringBuilder CreateList(string[] listItems)
         {
-            bio = text;
-        }
 
-        public void AddToInbox(Messages message)
-        {
-            myMessages.Add(message);
-
-        }
-
-        public void SendMessage(string messageTitle, string messageData, DatingProfile sentTo)
-        {
-            Messages message = new Messages(this, messageTitle, messageData);
-            sentTo.AddToInbox(message);
-        }
-
-        public void ReadMessage()
-        {
-            foreach (Messages message in myMessages)
+            StringBuilder sb = new StringBuilder();
+            sb.Append(open);
+            foreach (string item in listItems)
             {
-                if (message.isRead == false)
-                {
-                    Console.WriteLine(message.messageTitle);
-                    Console.WriteLine(message.messageData);
-                    message.isRead = true;
-                }
+                sb.Append(item);
             }
-        }
-    }
-    class Messages
-    {
-        public DatingProfile sender;
-        public string messageTitle;
-        public string messageData;
-        public bool isRead;
+            sb.Append(close);
 
-        public Messages(DatingProfile sender, string messageTitle, string messageData)
-        {
-            this.sender = sender;
-            this.messageTitle = messageTitle;
-            this.messageData = messageData;
-            isRead = false;
+            return sb;
         }
 
     }
+
+
+
+
     class Program
     {
         static void Main(string[] args)
         {
-            DatingProfile Ranveer = new DatingProfile("Ranveer", "Singh", 28, "Male");
-            Ranveer.WriteBio("Strong outdoors type");
+            string filename = "C://weblogs//9_4Lab.html";
+            Header header = new Header();
+            UnorderedList list = new UnorderedList();
+            StringBuilder sb = new StringBuilder();
 
-            DatingProfile Aamu = new DatingProfile("Aamu", "Sth", 25, "Female");
-            Aamu.WriteBio("new to this site");
+            Console.WriteLine("Enter text for HTML header.");
+            string headerElement = header.CreateHeader(Console.ReadLine());
+            string[] listItems = new string[3];
 
-            Ranveer.SendMessage("Hello Aamu", "Want to get some coffee?", Aamu);
-            Aamu.ReadMessage();
+            for (int i = 0; i < listItems.Length; i++)
+            {
+                Console.WriteLine("Add another item to the list.");
+                listItems[i] = list.CreateListItem(Console.ReadLine());
+            }
+
+            StringBuilder listElement = list.CreateList(listItems);
+            sb.Append(headerElement);
+            sb.Append(listElement.ToString());
+
+            File.AppendAllText(filename, sb.ToString());
+
         }
     }
 }
